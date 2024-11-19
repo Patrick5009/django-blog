@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!touch
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['8000-patrick5009-djangoblog-8ig490i8wjk.ws.codeinstitute-ide.net', 
 '.herokuapp.com']
