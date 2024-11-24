@@ -15,6 +15,12 @@ def post_detail(request, slug):
 
     ``post``
         An instance of :model:`blog.Post`.
+    ``comments``
+        All approved comments related to the post
+    ``comment_count``
+        A count of approved comments related to the post
+    ``comment_form``
+        An instance of :form:`blog.CommentForm`.
 
     **Template:**
 
@@ -26,7 +32,7 @@ def post_detail(request, slug):
     comments = post.comments.all().order_by("-created_on")
     comment_count = post.comments.filter(approved=True).count()
     if request.method == "POST":
-        print("Received a POST request")
+        # deleted print statement
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
@@ -39,7 +45,7 @@ def post_detail(request, slug):
             )
 
     comment_form = CommentForm()
-    print("About to render template")
+    # deleted print statement
 
     return render(
     request,
@@ -62,6 +68,17 @@ class PostList(generic.ListView):
 def comment_edit(request, slug, comment_id):
     """
     view to edit comments
+
+    Display an individual comment for edit
+
+    ***Context***
+
+    ``post``
+        An instance of :model:`blog.Post`.
+    ``comment``
+        A single comment related to the post.
+    ``comment_form``
+        An instance of :form:`blog.CommentForm`.
     """
     if request.method == "POST":
 
@@ -86,6 +103,15 @@ def comment_edit(request, slug, comment_id):
 def comment_delete(request, slug, comment_id):
     """
     view to delete comment
+
+    Delete an individual comment
+
+    ***Context***
+
+    ``post``
+        An instance of :model:`blog.Post`.
+    ``comment``
+        A single comment related to the post.
     """
     queryset = Post.objects.filter(status=1)
     post = get_object_or_404(queryset, slug=slug)
